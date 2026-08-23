@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A second push to the same branch cancels the run still in flight.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    # No database is started and none is reached. The tests are pure units, but importing the
+    # server's queryHistory module pulls in db/index.ts, which constructs a pg Pool and therefore
+    # validates the environment at import time - and that validation calls process.exit(1). These
+    # two values exist only to satisfy it: nothing connects, and neither is a real credential.
+    env:
+      APP_DATABASE_URL: postgres://ci:ci@127.0.0.1:5432/ci
+      APP_SECRET: ci-placeholder-not-a-secret-0000000000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      # The web build is not covered by typecheck alone: it also runs Vite and Tailwind, which is
+      # where a broken @source glob or an unresolvable font import would surface.
+      - name: Build
+        run: npm run build

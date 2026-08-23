@@ -1,0 +1,35 @@
+{
+  "name": "sqlmypg",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A self-hosted web UI for PostgreSQL where every editor tab is pinned to one real backend for its whole life.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xAL95/SqlMyPg.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xAL95/SqlMyPg/issues"
+  },
+  "type": "module",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:server": "npm run dev --workspace=server",
+    "dev:web": "npm run dev --workspace=web",
+    "build": "npm run build --workspace=server && npm run build --workspace=web",
+    "start": "node server/dist/index.js",
+    "typecheck": "npm run typecheck --workspace=server && npm run typecheck --workspace=web",
+    "test": "npm run test --workspace=server && npm run test --workspace=web",
+    "db:push": "npm run db:push --workspace=server"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

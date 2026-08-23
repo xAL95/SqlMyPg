@@ -1,0 +1,37 @@
+# Optional. Docker is not required for development on this machine - see README.md
+# "Quick start (Windows + WSL)" for the primary flow.
+#   APP_SECRET=$(openssl rand -base64 32) docker compose up --build
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: sqlmypg
+      POSTGRES_USER: sqlmypg
+      POSTGRES_PASSWORD: CHANGE_ME_DB_PASSWORD
+    # The 18 image keeps its data under /var/lib/postgresql/<version>/; mounting the
+    # parent directory persists it on both the old and the new layout.
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sqlmypg -d sqlmypg"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_DATABASE_URL: postgres://sqlmypg:CHANGE_ME_DB_PASSWORD@db:5432/sqlmypg
+      # No default on purpose: compose fails fast if it is not in your shell or a .env file.
+      APP_SECRET: ${APP_SECRET:?set APP_SECRET in your shell or in a .env next to this file}
+      COOKIE_SECURE: "false"
+      TRUST_PROXY: "false"
+    ports:
+      - "5274:5274"
+
+volumes:
+  pgdata:

@@ -1,0 +1,30 @@
+# Dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Secrets. .env holds the metadata-database URL and APP_SECRET, which signs session cookies and
+# encrypts stored connection passwords - it must never be committed. .env.example is the template
+# and is the only one of these that is tracked.
+.env
+.env.*
+!.env.example
+
+# Local design and tooling state
+web/.impeccable/review/
+.impeccable/questions/
+
+# Logs, coverage, caches
+*.log
+coverage/
+.vite/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

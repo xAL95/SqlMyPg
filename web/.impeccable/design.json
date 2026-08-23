@@ -1,0 +1,354 @@
+{
+ "schemaVersion": 2,
+ "generatedAt": "2026-08-23T00:00:00.000Z",
+ "title": "Design System: SqlMyPg",
+ "extensions": {
+  "renditions": {
+   "note": "Two complete renditions ship, switched by data-theme on the root element. Frontmatter's unsuffixed color keys are the dark rendition (:root, primary); the -light keys are the day rendition ([data-theme='light'], also served to prefers-color-scheme: light when no explicit theme is set). Each colorMeta entry carries both under canonical and lightRendition.",
+   "dark": "[data-theme='dark'] or :root default",
+   "light": "[data-theme='light']"
+  },
+  "pinnedBy": {
+   "note": "This world is pinned by the brief, not chosen by a direction roll. The operator named the referents and the two defects that drove the change.",
+   "referents": [
+    "TablePlus",
+    "DataGrip",
+    "Supabase Studio"
+   ],
+   "defectsAddressed": [
+    "The monospace interface face was hard to read.",
+    "The UI was too small overall.",
+    "A redundant control row sat between the tab strip and the grid."
+   ],
+   "replaces": "The Dealing Desk (seed 36fa37b8) - rejected by name in this brief."
+  },
+  "colorMeta": {
+   "bg": {
+    "role": "neutral",
+    "displayName": "Canvas",
+    "canonical": "#0f1115",
+    "lightRendition": "#ffffff",
+    "purpose": "The plane data is drawn on: the grid, the editor, the workspace."
+   },
+   "surface": {
+    "role": "neutral",
+    "displayName": "Chrome",
+    "canonical": "#15181e",
+    "lightRendition": "#f5f6f8",
+    "purpose": "The plane the chrome sits on: app bar, tab strip, sidebar, status rail, grid header and gutter, cards."
+   },
+   "elevated": {
+    "role": "neutral",
+    "displayName": "Raised",
+    "canonical": "#1b1f27",
+    "lightRendition": "#ffffff",
+    "purpose": "Anything that sits on top of a plane: inputs, dialogs, menus, the active tab chip, keycaps."
+   },
+   "hover": {
+    "role": "neutral",
+    "displayName": "Hover",
+    "canonical": "#212632",
+    "lightRendition": "#eceef1",
+    "purpose": "One tonal step up from whatever it sits on, on pointer hover."
+   },
+   "line": {
+    "role": "neutral",
+    "displayName": "Divider",
+    "canonical": "#242932",
+    "lightRendition": "#e2e5ea",
+    "purpose": "Quiet borders and the one-device-pixel hairlines that still divide panels."
+   },
+   "line-strong": {
+    "role": "neutral",
+    "displayName": "Control Border",
+    "canonical": "#333a45",
+    "lightRendition": "#ccd1d9",
+    "purpose": "The border of a control or an input, and the scrollbar thumb."
+   },
+   "fg": {
+    "role": "neutral",
+    "displayName": "Ink",
+    "canonical": "#e8ebf0",
+    "lightRendition": "#1b1f24",
+    "purpose": "Primary ink: data, headings, control labels."
+   },
+   "muted": {
+    "role": "neutral",
+    "displayName": "Secondary Ink",
+    "canonical": "#9aa3b2",
+    "lightRendition": "#57606a",
+    "purpose": "Field labels, icons at rest, secondary prose."
+   },
+   "faint": {
+    "role": "neutral",
+    "displayName": "Tertiary Ink",
+    "canonical": "#6e7887",
+    "lightRendition": "#7d8590",
+    "purpose": "Placeholders, NULL, disabled ink, row numbers."
+   },
+   "accent": {
+    "role": "primary",
+    "displayName": "Accent Fill",
+    "canonical": "#1f6feb",
+    "lightRendition": "#1f6feb",
+    "purpose": "The fill: the one primary action per surface, the product mark, a selected row gutter. White on it is 4.65:1."
+   },
+   "accent-text": {
+    "role": "primary",
+    "displayName": "Accent Ink",
+    "canonical": "#6ea8ff",
+    "lightRendition": "#1257c9",
+    "purpose": "The same hue lifted for text and icons on a panel: focus ring, spinner, links. Splitting this off the fill is what makes both legible."
+   },
+   "accent-fg": {
+    "role": "primary",
+    "displayName": "On Accent",
+    "canonical": "#ffffff",
+    "lightRendition": "#ffffff",
+    "purpose": "Ink on an accent fill."
+   },
+   "accent-soft": {
+    "role": "primary",
+    "displayName": "Accent Tint",
+    "canonical": "#16304f",
+    "lightRendition": "#ddf0ff",
+    "purpose": "Selection tint in the grid, badge grounds, icon tiles, the text selection colour."
+   },
+   "ok": {
+    "role": "success",
+    "displayName": "Committed",
+    "canonical": "#3fb950",
+    "lightRendition": "#166d2f",
+    "purpose": "Committed, connected, live. Never decorative."
+   },
+   "warn": {
+    "role": "warning",
+    "displayName": "Attention",
+    "canonical": "#d29922",
+    "lightRendition": "#8a5a00",
+    "purpose": "An open cursor, a table with no key, an unauthenticated session."
+   },
+   "danger": {
+    "role": "danger",
+    "displayName": "Danger",
+    "canonical": "#f85149",
+    "lightRendition": "#cf222e",
+    "purpose": "Errors and destructive actions."
+   },
+   "danger-soft": {
+    "role": "danger",
+    "displayName": "Danger Ground",
+    "canonical": "#2d1416",
+    "lightRendition": "#ffebe9",
+    "purpose": "The ground of an error banner or a destructive hover."
+   },
+   "ident": {
+    "role": "accent",
+    "displayName": "Identifier",
+    "canonical": "#79c0ff",
+    "lightRendition": "#0550ae",
+    "purpose": "Schema and relation names, wherever they appear: tree, tabs, status rail, and the editor."
+   }
+  }
+ },
+ "components": [
+  {
+   "name": "Primary Button",
+   "kind": "button",
+   "refersTo": "button-primary",
+   "description": "The one filled control on a surface. If every button is filled, none of them is primary, which is the most common way this class of UI loses its hierarchy.",
+   "html": "<button class=\"ds-btn ds-btn-primary\">Sign in</button>",
+   "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 12px; border: 1px solid transparent; border-radius: 6px; white-space: nowrap; user-select: none; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; transition: background-color 150ms cubic-bezier(0.16,1,0.3,1), border-color 150ms cubic-bezier(0.16,1,0.3,1), color 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms cubic-bezier(0.16,1,0.3,1); }\n.ds-btn-sm { height: 28px; padding: 0 8px; font-size: 12px; line-height: 18px; }\n.ds-btn-primary { background: #1f6feb; border-color: #1f6feb; color: #ffffff; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.5); }\n.ds-btn-primary:hover { filter: brightness(1.1); }"
+  },
+  {
+   "name": "Default Button",
+   "kind": "button",
+   "refersTo": "button-default",
+   "description": "A plate that stands on the panel with its own border and one step of tone on hover.",
+   "html": "<button class=\"ds-btn ds-btn-default\">Test connection</button>",
+   "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 12px; border: 1px solid transparent; border-radius: 6px; white-space: nowrap; user-select: none; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; transition: background-color 150ms cubic-bezier(0.16,1,0.3,1), border-color 150ms cubic-bezier(0.16,1,0.3,1), color 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms cubic-bezier(0.16,1,0.3,1); }\n.ds-btn-sm { height: 28px; padding: 0 8px; font-size: 12px; line-height: 18px; }\n.ds-btn-default { background: #1b1f27; border-color: #333a45; color: #e8ebf0; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.5); }\n.ds-btn-default:hover { background: #212632; border-color: #6e7887; }"
+  },
+  {
+   "name": "Danger Button",
+   "kind": "button",
+   "refersTo": "button-danger",
+   "description": "Outlined at rest, tinted on hover. Destructive actions are never filled by default.",
+   "html": "<button class=\"ds-btn ds-btn-danger\">Drop</button>",
+   "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 12px; border: 1px solid transparent; border-radius: 6px; white-space: nowrap; user-select: none; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; transition: background-color 150ms cubic-bezier(0.16,1,0.3,1), border-color 150ms cubic-bezier(0.16,1,0.3,1), color 150ms cubic-bezier(0.16,1,0.3,1), box-shadow 150ms cubic-bezier(0.16,1,0.3,1); }\n.ds-btn-sm { height: 28px; padding: 0 8px; font-size: 12px; line-height: 18px; }\n.ds-btn-danger { background: transparent; border-color: rgb(248 81 73 / 0.5); color: #f85149; }\n.ds-btn-danger:hover { background: #2d1416; border-color: #f85149; }"
+  },
+  {
+   "name": "Icon Button",
+   "kind": "button",
+   "refersTo": "icon-button",
+   "description": "Square, quiet, and always carrying both an aria-label and a title, and a disabled one says in its title why it is disabled.",
+   "html": "<button class=\"ds-iconbtn\" aria-label=\"Refresh\" title=\"Re-read this table\">↻</button>",
+   "css": ".ds-iconbtn { display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 6px; background: transparent; color: #9aa3b2; }\n.ds-iconbtn:hover { background: #212632; color: #e8ebf0; }\n.ds-iconbtn-sm { width: 28px; height: 28px; }"
+  },
+  {
+   "name": "Field (label + input)",
+   "kind": "input",
+   "refersTo": "input",
+   "description": "A label in the interface voice above a plate you can type into. The border takes the accent plus a ring when it holds the caret.",
+   "html": "<label class=\"ds-field\"><span class=\"ds-label\">Database</span><input class=\"ds-input\" value=\"animeshow\" /></label>",
+   "css": ".ds-field { display: flex; flex-direction: column; gap: 6px; }\n.ds-label { font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 18px; font-weight: 500; color: #9aa3b2; }\n.ds-input { width: 100%; height: 32px; padding: 0 10px; border: 1px solid #333a45; border-radius: 6px; background: #1b1f27; color: #e8ebf0; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }\n.ds-input::placeholder { color: #6e7887; opacity: 1; }\n.ds-input:focus { outline: none; border-color: #1f6feb; box-shadow: 0 0 0 2px rgb(31 111 235 / 0.3); }"
+  },
+  {
+   "name": "Badge",
+   "kind": "badge",
+   "refersTo": "badge-accent",
+   "description": "A soft pill in its own state colour. Tinted rather than filled, because a badge annotates something else on the row and must not out-shout it.",
+   "html": "<span class=\"ds-badge ds-badge-accent\">In transaction</span>",
+   "css": ".ds-badge { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border: 1px solid transparent; border-radius: 999px; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 11px; line-height: 16px; font-weight: 500; }\n.ds-badge-accent { background: #16304f; border-color: rgb(31 111 235 / 0.4); color: #6ea8ff; }\n.ds-badge-warn { background: rgb(210 153 34 / 0.12); border-color: rgb(210 153 34 / 0.4); color: #d29922; }\n.ds-badge-danger { background: #2d1416; border-color: rgb(248 81 73 / 0.4); color: #f85149; }"
+  },
+  {
+   "name": "Keycap",
+   "kind": "other",
+   "refersTo": "kbd",
+   "description": "A shortcut printed the way the platform prints it. The one place mono appears outside SQL and data.",
+   "html": "<kbd class=\"ds-kbd\">Ctrl+T</kbd>",
+   "css": ".ds-kbd { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border: 1px solid #333a45; border-radius: 3px; background: #15181e; color: #9aa3b2; font-family: 'JetBrains Mono', 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; }"
+  },
+  {
+   "name": "Annotation",
+   "kind": "other",
+   "refersTo": "status-rail",
+   "description": "A permanent readout that sits on the structure it describes: a quiet label, then the value in tabular figures. Nothing on the status rail reflows when a query starts.",
+   "html": "<span class=\"ds-annot\"><span class=\"ds-annot-k\">Est</span><span class=\"ds-annot-v\">~5.0M rows</span></span>",
+   "css": ".ds-annot { display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; }\n.ds-annot-k { font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 500; color: #6e7887; }\n.ds-annot-v { font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 13px; color: #e8ebf0; font-variant-numeric: tabular-nums; }"
+  },
+  {
+   "name": "App Bar",
+   "kind": "nav",
+   "refersTo": "app-bar",
+   "description": "What you are connected to, how to find things, and who you are. Nothing that acts on data lives here; that is the tab strip.",
+   "html": "<header class=\"ds-appbar\"><span class=\"ds-mark\"></span><span class=\"ds-wordmark\">SqlMyPg</span><span class=\"ds-cmd\">Search tables, connections, or type &gt; for commands</span></header>",
+   "css": ".ds-appbar { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 8px; background: #15181e; border-bottom: 1px solid #242932; }\n.ds-mark { width: 24px; height: 24px; border-radius: 6px; background: #1f6feb; }\n.ds-wordmark { font-family: 'Segoe UI Variable Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; font-weight: 600; color: #e8ebf0; }\n.ds-cmd { display: flex; align-items: center; height: 32px; flex: 1; max-width: 42rem; padding: 0 10px; border: 1px solid #333a45; border-radius: 6px; background: #1b1f27; color: #6e7887; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }"
+  },
+  {
+   "name": "Tab Strip with Actions",
+   "kind": "nav",
+   "refersTo": "tab-strip",
+   "description": "One bar, not two. The active tab is a raised chip; the slot on the right is filled by that tab through a portal, which is why the grid or the editor starts immediately beneath it.",
+   "html": "<div class=\"ds-strip\"><div class=\"ds-tab ds-tab-active\"><span class=\"ds-dot\"></span>public.query_history</div><div class=\"ds-tab\">Query 1</div><div class=\"ds-actions\"><button class=\"ds-btn ds-btn-sm ds-btn-primary\">+ Row</button></div></div>",
+   "css": ".ds-strip { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 8px 0 4px; background: #15181e; border-bottom: 1px solid #242932; }\n.ds-tab { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px; border: 1px solid transparent; border-radius: 6px; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 12px; color: #9aa3b2; }\n.ds-tab-active { background: #1b1f27; border-color: #242932; color: #e8ebf0; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.5); }\n.ds-tab:not(.ds-tab-active):hover { background: #212632; color: #e8ebf0; }\n.ds-dot { width: 10px; height: 10px; border-radius: 999px; border: 1px solid #333a45; }\n.ds-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }"
+  },
+  {
+   "name": "Dialog",
+   "kind": "modal",
+   "refersTo": "dialog",
+   "description": "Floats above the panel and says so with a real shadow: offset down, softly spread. The header does not need to be a coloured field to read as the active surface.",
+   "html": "<div class=\"ds-dialog\"><div class=\"ds-dialog-head\"><h2 class=\"ds-dialog-title\">New connection</h2></div><div class=\"ds-dialog-body\">…</div><div class=\"ds-dialog-foot\"><button class=\"ds-btn ds-btn-primary\">Create</button></div></div>",
+   "css": ".ds-dialog { display: flex; flex-direction: column; border: 1px solid #333a45; border-radius: 8px; background: #1b1f27; overflow: hidden; box-shadow: 0 12px 32px -8px rgb(0 0 0 / 0.65), 0 4px 8px -4px rgb(0 0 0 / 0.5); }\n.ds-dialog-head { padding: 14px 16px 12px; }\n.ds-dialog-title { margin: 0; font-family: 'Segoe UI Variable Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 20px; line-height: 28px; font-weight: 600; color: #e8ebf0; }\n.ds-dialog-body { padding: 0 16px 16px; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: #e8ebf0; }\n.ds-dialog-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; background: #15181e; border-top: 1px solid #242932; }"
+  },
+  {
+   "name": "Menu",
+   "kind": "other",
+   "refersTo": "menu",
+   "description": "The row under the cursor lifts one tone. A full accent inversion on every hover is how a menu starts to flash at you while you are only travelling through it.",
+   "html": "<div class=\"ds-menu\"><div class=\"ds-menu-item ds-menu-item-on\">Export as CSV</div><div class=\"ds-menu-item\">Show the SQL behind this view</div></div>",
+   "css": ".ds-menu { min-width: 13rem; padding: 4px; border: 1px solid #333a45; border-radius: 8px; background: #1b1f27; box-shadow: 0 12px 32px -8px rgb(0 0 0 / 0.65), 0 4px 8px -4px rgb(0 0 0 / 0.5); }\n.ds-menu-item { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 4px; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 18px; color: #e8ebf0; }\n.ds-menu-item-on { background: #212632; }"
+  },
+  {
+   "name": "Error Banner",
+   "kind": "other",
+   "refersTo": "dialog",
+   "description": "SQLSTATE is a permanent annotation rather than a decoration to fade out, and the Postgres HINT line, which is often the actual answer, is shown instead of swallowed.",
+   "html": "<div class=\"ds-err\" role=\"alert\"><span class=\"ds-err-code\">42P01</span> relation \"public\".\"anime\" does not exist</div>",
+   "css": ".ds-err { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1px solid rgb(248 81 73 / 0.5); border-radius: 6px; background: #2d1416; color: #f85149; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 18px; }\n.ds-err-code { border: 1px solid rgb(248 81 73 / 0.4); border-radius: 3px; padding: 0 4px; font-family: 'JetBrains Mono', 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; }"
+  },
+  {
+   "name": "Result Grid",
+   "kind": "table",
+   "refersTo": "grid-row",
+   "description": "The column name is interface text; the value is data. 30px rows, a 44px header carrying name and type, and selection as an accent tint in two intensities: the band you are on, and the cells actually picked.",
+   "html": "<div class=\"ds-grid\"><div class=\"ds-grid-head\"><div class=\"ds-th\"><span class=\"ds-th-name\">amount</span><span class=\"ds-th-type\">numeric</span></div></div><div class=\"ds-tr\"><div class=\"ds-gutter\">1</div><div class=\"ds-td ds-num\">1284.50</div></div><div class=\"ds-tr ds-tr-sel\"><div class=\"ds-gutter ds-gutter-sel\">2</div><div class=\"ds-td ds-num ds-td-sel\">96.00</div></div></div>",
+   "css": ".ds-grid { font-family: 'JetBrains Mono', 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; line-height: 20px; font-variant-numeric: tabular-nums; }\n.ds-grid-head { display: flex; height: 44px; background: #15181e; }\n.ds-th { display: flex; flex-direction: column; justify-content: center; padding: 0 6px; border-right: 1px solid #242932; border-bottom: 1px solid #242932; }\n.ds-th-name { font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 600; color: #e8ebf0; }\n.ds-th-type { font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 11px; color: #9aa3b2; }\n.ds-tr { display: flex; height: 30px; }\n.ds-tr-sel { background: rgb(22 48 79 / 0.4); }\n.ds-gutter { width: 60px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; border-right: 1px solid #242932; background: #15181e; color: #6e7887; font-size: 11px; }\n.ds-gutter-sel { background: #1f6feb; color: #ffffff; font-weight: 500; }\n.ds-td { display: flex; align-items: center; padding: 0 6px; border-right: 1px solid #242932; border-bottom: 1px solid #242932; }\n.ds-num { justify-content: flex-end; }\n.ds-td-sel { background: #16304f; }"
+  },
+  {
+   "name": "Schema Tree Row",
+   "kind": "other",
+   "refersTo": "tree-row",
+   "description": "A row you can hit without aiming: 13px on a 30px row, a 14px indent per level, and the size estimate right-aligned as an annotation rather than a column.",
+   "html": "<div class=\"ds-treerow\"><span class=\"ds-chev\">›</span>events<span class=\"ds-est\">~5.0M rows · 412 MB</span></div>",
+   "css": ".ds-treerow { display: flex; align-items: center; gap: 6px; padding: 6px 8px 6px 20px; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 13px; line-height: 20px; color: #e8ebf0; }\n.ds-treerow:hover { background: #212632; }\n.ds-chev { display: grid; place-items: center; width: 16px; color: #9aa3b2; }\n.ds-est { margin-left: auto; padding-left: 8px; font-size: 11px; color: #6e7887; font-variant-numeric: tabular-nums; }"
+  },
+  {
+   "name": "Attribute Matrix Cell",
+   "kind": "other",
+   "refersTo": "card",
+   "description": "A privilege or role attribute is a checkbox in all but name, so it is drawn as one. Filled means granted directly here and revocable; hollow-and-recessed means held through membership or ownership, which cannot be changed from this cell.",
+   "html": "<span class=\"ds-cell ds-cell-on\"></span><span class=\"ds-cell\"></span><span class=\"ds-cell ds-cell-off\"></span>",
+   "css": ".ds-cell { display: inline-block; width: 16px; height: 16px; border: 1px solid #333a45; border-radius: 3px; background: transparent; }\n.ds-cell:hover { border-color: #1f6feb; }\n.ds-cell-on { background: #1f6feb; border-color: #1f6feb; }\n.ds-cell-off { opacity: 0.45; cursor: not-allowed; }"
+  },
+  {
+   "name": "Empty State",
+   "kind": "other",
+   "refersTo": "card",
+   "description": "The first thing a new operator reads, so it gets the weight of a page: an icon tile, a 16px title, one sentence, and the action that is actually next.",
+   "html": "<div class=\"ds-empty\"><span class=\"ds-empty-icon\"></span><span class=\"ds-empty-title\">No rows match that filter</span><p class=\"ds-empty-body\">Clear the filter, or widen the predicate.</p></div>",
+   "css": ".ds-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 32px; text-align: center; font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto, 'Helvetica Neue', Arial, sans-serif; }\n.ds-empty-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; background: #15181e; color: #9aa3b2; }\n.ds-empty-title { font-size: 16px; line-height: 24px; font-weight: 600; color: #e8ebf0; }\n.ds-empty-body { max-width: 28rem; margin: 0; font-size: 12px; line-height: 18px; color: #9aa3b2; }"
+  },
+  {
+   "name": "Product Mark",
+   "kind": "other",
+   "refersTo": "app-bar",
+   "description": "Three ascending bars in a filled tile: rows in a table, and the product's only piece of identity. No logo asset exists, so the app draws it.",
+   "html": "<span class=\"ds-marktile\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" aria-hidden><rect x=\"0\" y=\"8\" width=\"3\" height=\"4\" rx=\"1\" fill=\"currentColor\"/><rect x=\"4.5\" y=\"4\" width=\"3\" height=\"8\" rx=\"1\" fill=\"currentColor\"/><rect x=\"9\" y=\"0\" width=\"3\" height=\"12\" rx=\"1\" fill=\"currentColor\"/></svg></span>",
+   "css": ".ds-marktile { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: #1f6feb; color: #ffffff; }"
+  }
+ ],
+ "narrative": {
+  "northStar": "A modern developer tool, executed properly.",
+  "overview": "This world is pinned by the brief. The operator asked for the thing this category has settled on - naming TablePlus, DataGrip and Supabase Studio - and said in as many words that the monospace interface itself was the problem and that the UI was too small. So the commitment is the convention, executed at full fidelity: no irony, no smuggled quirk, and no attempt to redirect it back toward a house style. The craft has to show in how legible, calm and unhurried the tool is, not in refusing what a database client is supposed to look like.\n\nThe one decision everything else follows from: mono is not the interface. It is confined to SQL in the editor and values in the data grid, and everything operable speaks the operating system UI face. The referents are native desktop applications; loading a webfont to imitate nativeness would be the wrong instinct.\n\nThe interface steps off 14px, data sits one step down at 13px mono, and controls are 32px. Panels are objects with a body: radius on a scale, elevation with a vertical offset, and separation by tone as well as by hairline. One blue accent, split into a fill token and a text token because one colour cannot be both a legible fill and legible text.",
+  "keyCharacteristics": [
+   "System UI sans for everything operable; JetBrains Mono only for SQL and grid values.",
+   "14px interface / 13px data / 32px controls.",
+   "Radius and elevation are real, on a documented scale, and enforced by the detector.",
+   "Two complete renditions; dark is primary and comes from the use scene.",
+   "One control bar, not two: the tab strip carries the active tab's own controls.",
+   "Every state still reads with colour removed."
+  ],
+  "rules": [
+   "One primary action per surface. If every button is filled, none of them is primary.",
+   "accent is the fill; accent-text is the ink. Never use the fill colour as text.",
+   "Mono appears only in SQL, in grid values, in keycaps, and in inline code. Never in a label or a control.",
+   "The One-Grid Rule: a matrix header and its rows live in the same CSS grid, or the labels drift off their columns.",
+   "Every icon-only control carries both an aria-label and a title; a disabled control says why in its title.",
+   "Tailwind scans source text including comments - keep source(none) plus an explicit @source.",
+   "Monaco takes the theme as a prop. Never sniff it from the DOM: the shell writes dataset.theme.",
+   "The status rail must not reflow when a query starts, so its fields are fixed width.",
+   "No control row between the tab strip and the content. Controls go in the strip's actions slot.",
+   "Empty states name the next action, and it must be an action that can actually succeed."
+  ],
+  "dos": [
+   "Reach for the documented radius and shadow tokens rather than a literal value.",
+   "Put a new control in the tab strip's slot if it belongs to one tab.",
+   "State a Postgres SQLSTATE and HINT verbatim when one is available.",
+   "Give a disabled control a title that explains the precondition."
+  ],
+  "donts": [
+   "Do not set an interface face to monospace.",
+   "Do not go below a 14px interface base or a 32px control height.",
+   "Do not invert a selection to solid ink - selection is an accent tint.",
+   "Do not add a second horizontal bar under the tab strip.",
+   "Do not use uppercase tracked labels; the label voice is sentence case."
+  ],
+  "knownDivergences": [
+   "Control borders are below the 3:1 component-boundary target (1.55:1 dark, 1.42:1 light) because matching the referents' border weight is the brief. Flagged, not fixed.",
+   "The schema tree's search highlight is source-confirmed but has never been observed rendered.",
+   "scripts/smoke/api.mjs carries assertion blocks for insert / edit / delete / DDL / ACL that have never been run.",
+   "No accessibility standard is committed for the product, so contrast figures are measured but not held to a target."
+  ],
+  "contrast": {
+   "white on accent (primary button), both renditions": "4.63:1 - AA normal text",
+   "accent-text on bg (dark)": "7.84:1",
+   "accent-text on bg (light)": "6.50:1",
+   "fg on accent-soft (selected grid cell), dark / light": "11.19:1 / 14.18:1",
+   "danger on danger-soft (error banner), dark / light": "5.12:1 / 4.67:1",
+   "audited": "82 text and component pairs across both renditions; 80 meet their target.",
+   "belowTarget": [
+    "line-strong on surface (control border): 1.55:1 dark, 1.42:1 light, against a 3:1 target for a component boundary. Deliberate - the named referents draw this border at the same weight, and raising it would make the product heavier than the tools it must sit alongside."
+   ]
+  }
+ }
+}

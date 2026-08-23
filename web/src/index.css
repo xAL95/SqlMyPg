@@ -1,0 +1,393 @@
+/* source(none) plus explicit sources: Tailwind scans source TEXT for class candidates, comments
+   included, so a class name written in prose here would emit a real rule. The guard stays even
+   though this world uses radius deliberately - it keeps the stylesheet to what the app references. */
+@import 'tailwindcss' source(none);
+@source './**/*.{ts,tsx}';
+
+/* Mono is no longer the interface. It is confined to the two places it earns its keep: SQL in the
+   editor and values in the data grid. JetBrains Mono is the reference face of this tool class -
+   wide apertures, a slashed zero, a disambiguated Il1 set - which is what you need when a value in
+   a cell has to be read once and trusted. */
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
+
+/* App writes document.documentElement.dataset.theme, so `dark:` must follow that attribute rather
+   than the OS preference - otherwise the manual toggle only moves half the colours. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Palette lives in plain custom properties so a runtime toggle can swap it; @theme only
+   re-publishes them as Tailwind utilities (`inline` keeps the utility pointing at the raw var). */
+@theme inline {
+  --color-bg: var(--p-bg);
+  --color-surface: var(--p-surface);
+  --color-elevated: var(--p-elevated);
+  --color-hover: var(--p-hover);
+  --color-line: var(--p-line);
+  --color-line-strong: var(--p-line-strong);
+  --color-fg: var(--p-fg);
+  --color-muted: var(--p-muted);
+  --color-faint: var(--p-faint);
+  /* Two accent tokens, because one colour cannot be both a legible fill and legible text.
+     --accent is the fill (white on it passes AA); --accent-text is the same hue lifted for text
+     and icons sitting on a panel. Using the fill colour as text was the shortcut that made an
+     earlier contrast claim false. */
+  --color-accent: var(--p-accent);
+  --color-accent-text: var(--p-accent-text);
+  --color-accent-fg: var(--p-accent-fg);
+  --color-accent-soft: var(--p-accent-soft);
+  --color-ok: var(--p-ok);
+  --color-warn: var(--p-warn);
+  --color-danger: var(--p-danger);
+  --color-danger-soft: var(--p-danger-soft);
+  /* Identifiers: schema and relation names, the one hue that is neither state nor action. */
+  --color-ident: var(--p-ident);
+
+  --font-mono: 'JetBrains Mono', 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;
+  /* The interface speaks the operating system's own voice. The referents for this redesign are
+     native desktop applications; loading a webfont to imitate nativeness is the wrong instinct,
+     and the platform face is already hinted for the screen it will be read on. */
+  --font-sans:
+    'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif, Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  /* Panel titles and dialog headings, where the display cut has the better spacing. */
+  --font-display:
+    'Segoe UI Variable Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, ui-sans-serif,
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* 14px base, not 12. The old scale was built around a narrow mono; a UI sans at the same pixel
+     size reads smaller still, so the step up is what makes the interface legible rather than dense
+     for its own sake. Data stays one step down, because a grid earns its density. */
+  --text-xs: 11px;
+  --text-xs--line-height: 16px;
+  --text-sm: 12px;
+  --text-sm--line-height: 18px;
+  --text-base: 14px;
+  --text-base--line-height: 20px;
+  --text-lg: 16px;
+  --text-lg--line-height: 24px;
+  --text-xl: 20px;
+  --text-xl--line-height: 28px;
+
+  /* Radius is real in this world. Controls take the small step, panels and overlays the larger
+     one, so the two never read as the same kind of object. */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Elevation with offset and a soft spread. A blur with no offset is a glow, not a shadow, and
+     reads as a mistake on any surface meant to sit above another. */
+  --shadow-sm: 0 1px 2px 0 var(--p-shadow);
+  --shadow-md: 0 2px 6px -1px var(--p-shadow), 0 1px 2px -1px var(--p-shadow);
+  --shadow-lg: 0 12px 32px -8px var(--p-shadow-strong), 0 4px 8px -4px var(--p-shadow);
+}
+
+@layer base {
+  /* Dark stays the primary rendition: the scene is a wide desktop with a terminal open beside the
+     browser. What changed is the temperature - layered blue-grey planes instead of matte black, so
+     panels separate by tone and not only by a hairline. */
+  :root {
+    --p-bg: #0f1115;
+    --p-surface: #15181e;
+    --p-elevated: #1b1f27;
+    --p-hover: #212632;
+    --p-line: #242932;
+    --p-line-strong: #333a45;
+    --p-fg: #e8ebf0;
+    --p-muted: #9aa3b2;
+    --p-faint: #6e7887;
+    --p-accent: #1f6feb;
+    --p-accent-text: #6ea8ff;
+    --p-accent-fg: #ffffff;
+    --p-accent-soft: #16304f;
+    --p-ok: #3fb950;
+    --p-warn: #d29922;
+    --p-danger: #f85149;
+    --p-danger-soft: #2d1416;
+    --p-ident: #79c0ff;
+    --p-shadow: rgb(0 0 0 / 0.5);
+    --p-shadow-strong: rgb(0 0 0 / 0.65);
+
+    --hair: 1px;
+    color-scheme: dark;
+  }
+
+  /* Light is the same tool by daylight: white canvas, a grey chrome plane behind it. The sidebar
+     being darker than the canvas is not an inconsistency with dark mode - it is how every tool in
+     this class builds its light theme, because the canvas is the paper. */
+  [data-theme='light'] {
+    --p-bg: #ffffff;
+    --p-surface: #f5f6f8;
+    --p-elevated: #ffffff;
+    --p-hover: #eceef1;
+    --p-line: #e2e5ea;
+    --p-line-strong: #ccd1d9;
+    --p-fg: #1b1f24;
+    --p-muted: #57606a;
+    --p-faint: #7d8590;
+    --p-accent: #1f6feb;
+    --p-accent-text: #1257c9;
+    --p-accent-fg: #ffffff;
+    --p-accent-soft: #ddf0ff;
+    --p-ok: #166d2f;
+    --p-warn: #8a5a00;
+    --p-danger: #cf222e;
+    --p-danger-soft: #ffebe9;
+    --p-ident: #0550ae;
+    --p-shadow: rgb(31 35 40 / 0.12);
+    --p-shadow-strong: rgb(31 35 40 / 0.2);
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme='dark']):not([data-theme='light']) {
+      --p-bg: #ffffff;
+      --p-surface: #f5f6f8;
+      --p-elevated: #ffffff;
+      --p-hover: #eceef1;
+      --p-line: #e2e5ea;
+      --p-line-strong: #ccd1d9;
+      --p-fg: #1b1f24;
+      --p-muted: #57606a;
+      --p-faint: #7d8590;
+      --p-accent: #1f6feb;
+      --p-accent-text: #1257c9;
+      --p-accent-fg: #ffffff;
+      --p-accent-soft: #ddf0ff;
+      --p-ok: #166d2f;
+      --p-warn: #8a5a00;
+      --p-danger: #cf222e;
+      --p-danger-soft: #ffebe9;
+      --p-ident: #0550ae;
+      --p-shadow: rgb(31 35 40 / 0.12);
+      --p-shadow-strong: rgb(31 35 40 / 0.2);
+      color-scheme: light;
+    }
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background: var(--p-bg);
+    color: var(--p-fg);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Figures line up in columns wherever they are read as data. Interface prose does not need it. */
+  .font-mono,
+  [class*='tabular'] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The parts we did not draw still carry the design: scrollbars, caret, selection and focus.
+     Leaving these to the browser is the tell that a UI was assembled rather than built. */
+  ::selection {
+    background: var(--p-accent-soft);
+    color: var(--p-fg);
+  }
+
+  :root {
+    scrollbar-color: var(--p-line-strong) transparent;
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--p-line-strong);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--p-faint);
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Focus is a ring clear of the control - the convention this tool class uses and the one people
+     already recognise. */
+  :focus-visible {
+    outline: 2px solid var(--p-accent-text);
+    outline-offset: 1px;
+    border-radius: var(--radius-sm);
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    caret-color: var(--p-accent-text);
+  }
+
+  input[type='checkbox'] {
+    accent-color: var(--p-accent);
+  }
+
+  ::placeholder {
+    color: var(--p-faint);
+    opacity: 1;
+  }
+
+  /* Monaco is locked as the editor, but its chrome answers to this palette. */
+  .monaco-editor,
+  .monaco-editor-background,
+  .monaco-editor .margin {
+    background-color: var(--p-bg) !important;
+  }
+
+  /* The disclosure triangle is a browser surface like the scrollbar: this world draws its own
+     affordance, so the platform's marker is removed rather than left unstyled beside it. */
+  summary.marker-none {
+    list-style: none;
+  }
+  summary.marker-none::-webkit-details-marker,
+  summary.marker-none::marker {
+    display: none;
+    content: '';
+  }
+}
+
+/* Disabled reads as recessed, not hatched. A screen pattern was the old world's device; here the
+   convention is a plain drop in contrast, which is what people expect from a control they cannot
+   use. Kept as a utility because it is applied through the disabled: variant. */
+@utility screened {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@layer components {
+  /* Same name, new job. This was tracked uppercase in a condensed face; it is now an ordinary
+     field label in the interface voice, because a form label that shouts is a label you read
+     twice. Every `.placard` in the app inherits the change without being touched. */
+  .placard {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--p-muted);
+  }
+
+  /* Panel and dialog titles: the display cut, sentence case, one step up from body. */
+  .panel-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--p-fg);
+  }
+
+  /* Hairlines still exist - they are just no longer the only way two things are separated. */
+  .rule-t {
+    border-top: var(--hair) solid var(--p-line);
+  }
+  .rule-b {
+    border-bottom: var(--hair) solid var(--p-line);
+  }
+  .rule-l {
+    border-left: var(--hair) solid var(--p-line);
+  }
+  .rule-r {
+    border-right: var(--hair) solid var(--p-line);
+  }
+
+  /* A readout that sits on the structure it describes: quiet label, then the value. */
+  .annot {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .annot > .k {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--p-faint);
+  }
+  .annot > .v {
+    font-size: 13px;
+    color: var(--p-fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* A statement that failed is spent, and the printed mark says so without leaning on the red lamp. */
+  .struck {
+    text-decoration: line-through;
+    text-decoration-thickness: var(--hair);
+    color: var(--p-faint);
+  }
+
+  /* The busy signal: three dots easing, the idiom this tool class uses. Same markup as the old
+     stepped blocks, so the vocabulary swaps without touching a component. */
+  .scanner {
+    display: inline-flex;
+    gap: 3px;
+    align-items: center;
+  }
+  .scanner > i {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: ip-pulse 1s ease-in-out infinite;
+  }
+  .scanner > i:nth-child(2) {
+    animation-delay: 160ms;
+  }
+  .scanner > i:nth-child(3) {
+    animation-delay: 320ms;
+  }
+  .scanner-bar {
+    animation: ip-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes ip-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Motion conveys state and nothing else: 150ms, damped, from an already-visible default. */
+@media (prefers-reduced-motion: no-preference) {
+  @layer base {
+    button,
+    a,
+    [role='button'],
+    [role='menuitem'] {
+      transition:
+        background-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+        color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanner > i,
+  .scanner-bar {
+    animation: none;
+    opacity: 0.6;
+  }
+}
