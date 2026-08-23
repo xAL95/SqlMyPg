@@ -2,7 +2,7 @@
   "name": "sqlmypg",
   "private": true,
   "version": "0.1.0",
-  "description": "A self-hosted web UI for PostgreSQL where every editor tab is pinned to one real backend for its whole life.",
+  "description": "Self-hosted PostgreSQL web UI for database management: browse schemas, run SQL, edit rows and schema, manage roles, export results.",
   "license": "MIT",
   "repository": {
     "type": "git",
